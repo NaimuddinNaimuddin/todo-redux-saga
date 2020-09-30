@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 function ToDo(props) {
-
+    
     const [title, titleUpdate] = useState(props.title)
 
     return (
@@ -26,14 +26,14 @@ function ToDo(props) {
             <div className="input-group-prepend">
                 <div className="input-group-text">
                     {
-                        props.isDone ? <input type="checkbox" checked onClick={(e) => {
+                        props.isDone ? <input type="checkbox" checked onChange={(e) => {
 
                             props.checkHandler({
                                 "id": props.id,
                                 "title": props.title,
                                 "isDone": !props.isDone
                             })
-                        }} /> : <input type="checkbox" onClick={(e) => {
+                        }} /> : <input type="checkbox" onChange={(e) => {
 
                             props.checkHandler({
                                 "id": props.id,
@@ -45,25 +45,9 @@ function ToDo(props) {
                 </div>
             </div>
 
-
-
             <div className="input-group-append">
                 <button className="btn btn-secondary" disabled> {props.completeAt} </button>
             </div>
-
-            {/* <div className="input-group-append">
-                <button className="btn btn-info" onClick={(e) => {
-                    document.getElementById(props.id).disabled = false
-
-                }} > EDIT </button>
-            </div> */}
-
-            {/* <div className="input-group-append">
-                <button className="btn btn-info" onClick={(e) => {
-                    props.editHandler(props.id, title)
-
-                }} > EDIT </button>
-            </div> */}
 
             <div className="input-group-append">
                 <button className="btn btn-danger" onClick={(e) => {

@@ -1,15 +1,12 @@
-import React from 'react'
-import ToDo from '../component/ToDo'
+import React, { useState } from 'react'
+import Header from '../component/Header'
 import AddTodo from '../component/AddTodo'
 import FilterTodos from '../component/FilterTodos'
-import useListF from '../customHook/useList'
-import useTodoState from '../customHook/useTodoState'
+import ToDo from '../component/ToDo'
 
-function Todos() {
-    const useList = useListF()
+function Home() {
 
-    const [todos, todosUpdate] = useTodoState(useList)
-
+    const [todos, todosUpdate] = useState([])
     const add = (data) => {
         todosUpdate([...todos, data])
         localStorage.setItem("todos", JSON.stringify([...todos, data]))
@@ -25,8 +22,6 @@ function Todos() {
     }
 
     const deleteHandler = (id) => {
-
-        // let index = todos.findIndex(element => element.id === id)
         let newList = todos.filter(i => {
             return i.id !== id
         })
@@ -36,33 +31,31 @@ function Todos() {
     }
 
     const editHandler = (id, value) => {
-        // console.log(id ,value)
         let index = todos.findIndex(element => element.id === id)
-
         let newList = [...todos]
         newList[index] = { ...newList[index], "title": value }
         todosUpdate([...newList])
         localStorage.setItem("todos", JSON.stringify([...newList]))
-
     }
 
     const filterTodos = (data) => {
 
-        if (data === "true") {
-            todosUpdate([...useList].filter(i => {
-                return i.isDone.toString() === data
-            }))
-        } else if (data === "false") {
-            todosUpdate([...useList].filter(i => {
-                return i.isDone.toString() === data
-            }))
-        } else if (data === "all") {
-            todosUpdate([...useList])
-        }
+        // if (data === "true") {
+        //     todosUpdate([...useList].filter(i => {
+        //         return i.isDone.toString() === data
+        //     }))
+        // } else if (data === "false") {
+        //     todosUpdate([...useList].filter(i => {
+        //         return i.isDone.toString() === data
+        //     }))
+        // } else if (data === "all") {
+        //     todosUpdate([...useList])
+        // }
     }
 
     return (
         <div>
+            <Header />
             <AddTodo add={add} />
             <FilterTodos filterTodos={filterTodos} />
 
@@ -84,5 +77,4 @@ function Todos() {
         </div>
     )
 }
-
-export default Todos
+export default Home
