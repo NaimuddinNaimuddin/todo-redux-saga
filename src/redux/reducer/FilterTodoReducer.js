@@ -8,7 +8,7 @@ let storageList = JSON.parse(localStorage.getItem("todos")) || list
 
 function filterTodoReducer(todoList = storageList, action) {
 
-    if (action.type === constant.FILTER_TODO1) {
+    if (action.type === constant.FILTER_TODO_S) {
         console.log(action)
 
         if (action.payload === "true") {

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import Header from '../component/Header'
 import AddTodo from '../component/AddTodo'
 import FilterTodos from '../component/FilterTodos'
 import ShowTodo from '../component/ShowTodo'
-import { addTodos1, checkTodos1, deleteTodos1, editTodos1, } from '../redux/action/index';
+import { addTodo, checkTodo, deleteTodo, editTodo, } from '../redux/action/index';
 
 function Home() {
     const [filter, filterUpdate] = useState('all')
@@ -11,16 +12,16 @@ function Home() {
     const dispatch = useDispatch();
 
     const addHandler = (data) => {
-        dispatch(addTodos1(data))
+        dispatch(addTodo(data))
     }
     const checkHandler = (newData) => {
-        dispatch(checkTodos1({ id: newData.id, isDone: newData.isDone }))
+        dispatch(checkTodo({ id: newData.id, isDone: newData.isDone }))
     }
     const deleteHandler = (id) => {
-        dispatch(deleteTodos1(id))
+        dispatch(deleteTodo(id))
     }
     const editHandler = (id, value) => {
-        dispatch(editTodos1({ id, value }))
+        dispatch(editTodo({ id, value }))
     }
     const filterTodos = (data) => {
         filterUpdate(data)
@@ -38,6 +39,7 @@ function Home() {
 
     return (
         <div>
+            <Header/>
             <AddTodo addHandler={addHandler} />
             <FilterTodos filterTodos={filterTodos} />
             <ShowTodo todos={todosNew}

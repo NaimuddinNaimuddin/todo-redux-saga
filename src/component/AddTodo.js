@@ -10,10 +10,9 @@ function AddTodo(props) {
 
     return (
         <div style={{ paddingLeft: "8%", paddingRight: "8%" }}>
-
             <form onSubmit={(e) => {
                 e.preventDefault()
-                props.add({ "id": id, "title": todo, "isDone": isDone , "completeAt" : completeAt , "createdAt" : Date.now()})
+                props.addHandler({ "id": id, "title": todo, "isDone": isDone , "completeAt" : completeAt , "createdAt" : Date.now()})
                 todoUpdate('')
                 completeAtUpdate('')
             }} >
@@ -30,5 +29,4 @@ function AddTodo(props) {
         </div >
     )
 }
-
 export default AddTodo

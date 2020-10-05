@@ -8,11 +8,11 @@ export const editTodos = createAction(constant.EDIT_TODO);
 export const filterTodos = createAction(constant.FILTER_TODO);
 
 
-export const addTodos1 = createAction(constant.ADD_TODO1);
-export const checkTodos1 = createAction(constant.CHECK_TODO1);
-export const deleteTodos1 = createAction(constant.DELETE_TODO1);
-export const editTodos1 = createAction(constant.EDIT_TODO1);
-export const filterTodos1 = createAction(constant.FILTER_TODO1);
+export const addTodo = createAction(constant.ADD_TODO_S);
+export const checkTodo = createAction(constant.CHECK_TODO_S);
+export const deleteTodo = createAction(constant.DELETE_TODO_S);
+export const editTodo = createAction(constant.EDIT_TODO_S);
+export const filterTodo = createAction(constant.FILTER_TODO_S);
 
 
 export const allTodos = createAction(constant.ALL_TODO);
