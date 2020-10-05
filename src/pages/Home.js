@@ -26,7 +26,6 @@ function Home() {
     const filterTodos = (data) => {
         filterUpdate(data)
     }
-
     const todosNew = todos.filter((e) => {
         if (filter === 'all') {
             return e.isDone === true || e.isDone === false
@@ -36,7 +35,6 @@ function Home() {
             return e.isDone === false
         }
     })
-
     return (
         <div>
             <Header/>

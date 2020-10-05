@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 
-
 function AddTodo(props) {
-
     const id = Math.random() * 10000
     const [todo, todoUpdate] = useState('')
     const [completeAt, completeAtUpdate] = useState('')
     const [isDone] = useState(false)
-
     return (
         <div style={{ paddingLeft: "8%", paddingRight: "8%" }}>
             <form onSubmit={(e) => {

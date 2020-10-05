@@ -6,31 +6,35 @@ let list = [{ "id": 1234, "title": "reactjs1", "isDone": false, "createdAt": "20
 let storageList = JSON.parse(localStorage.getItem("todos")) || list
 
 function todoReducer(todoList = storageList, action) {
-  if (action.type === constant.ADD_TODO) {
-    localStorage.setItem("todos", JSON.stringify([...todoList, action.payload]))
-    return [...todoList, action.payload];
+  switch (action.type) {
+    case constant.ADD_TODO: {
+      localStorage.setItem("todos", JSON.stringify([...todoList, action.payload]))
+      return [...todoList, action.payload];
+    }
+
+    case constant.EDIT_TODO: {
+      let index = todoList.findIndex(element => element.id === action.payload.id)
+      let newList = [...todoList]
+      newList[index] = { ...newList[index], "title": action.payload.value }
+      localStorage.setItem("todos", JSON.stringify([...newList]))
+      return [...newList]
+    }
+    case constant.DELETE_TODO: {
+      let newList = todoList.filter(i => {
+        return i.id !== action.payload
+      })
+      localStorage.setItem("todos", JSON.stringify([...newList]))
+      return [...newList]
+    }
+    case constant.CHECK_TODO: {
+      let index = todoList.findIndex(element => element.id === action.payload.id)
+      let newList = [...todoList]
+      newList[index] = { ...newList[index], "isDone": action.payload.isDone }
+      localStorage.setItem("todos", JSON.stringify([...newList]))
+      return [...newList]
+    }
+    default:
+      return todoList
   }
-  else if (action.type === constant.DELETE_TODO) {
-    let newList = todoList.filter(i => {
-      return i.id !== action.payload
-    })
-    localStorage.setItem("todos", JSON.stringify([...newList]))
-    return [...newList]
-  }
-  else if (action.type === constant.EDIT_TODO) {
-    let index = todoList.findIndex(element => element.id === action.payload.id)
-    let newList = [...todoList]
-    newList[index] = { ...newList[index], "title": action.payload.value }
-    localStorage.setItem("todos", JSON.stringify([...newList]))
-    return [...newList]
-  }
-  else if (action.type === constant.CHECK_TODO) {
-    let index = todoList.findIndex(element => element.id === action.payload.id)
-    let newList = [...todoList]
-    newList[index] = { ...newList[index], "isDone": action.payload.isDone }
-    localStorage.setItem("todos", JSON.stringify([...newList]))
-    return [...newList]
-  }
-  else return todoList;
 }
 export default todoReducer;
