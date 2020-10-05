@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
 
-
 function AddTodo(props) {
-
     const id = Math.random() * 10000
     const [todo, todoUpdate] = useState('')
     const [completeAt, completeAtUpdate] = useState('')
     const [isDone] = useState(false)
-
     return (
         <div style={{ paddingLeft: "8%", paddingRight: "8%" }}>
-
             <form onSubmit={(e) => {
                 e.preventDefault()
-                props.add({ "id": id, "title": todo, "isDone": isDone , "completeAt" : completeAt , "createdAt" : Date.now()})
+                props.addHandler({ "id": id, "title": todo, "isDone": isDone , "completeAt" : completeAt , "createdAt" : Date.now()})
                 todoUpdate('')
                 completeAtUpdate('')
             }} >
@@ -30,5 +26,4 @@ function AddTodo(props) {
         </div >
     )
 }
-
 export default AddTodo

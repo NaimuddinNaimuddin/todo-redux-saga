@@ -1,79 +1,49 @@
 import React, { useState } from 'react'
+import { useSelector, useDispatch } from "react-redux";
 import Header from '../component/Header'
 import AddTodo from '../component/AddTodo'
 import FilterTodos from '../component/FilterTodos'
-import ToDo from '../component/ToDo'
+import ShowTodo from '../component/ShowTodo'
+import { addTodo, checkTodo, deleteTodo, editTodo, } from '../redux/action/index';
 
 function Home() {
+    const [filter, filterUpdate] = useState('all')
+    const todos = useSelector((state) => state.TodoReducerstatus)
+    const dispatch = useDispatch();
 
-    const [todos, todosUpdate] = useState([])
-    const add = (data) => {
-        todosUpdate([...todos, data])
-        localStorage.setItem("todos", JSON.stringify([...todos, data]))
+    const addHandler = (data) => {
+        dispatch(addTodo(data))
     }
-
     const checkHandler = (newData) => {
-
-        let index = todos.findIndex(element => element.id === newData.id)
-        let newList = [...todos]
-        newList[index] = { ...newList[index], "isDone": newData.isDone }
-        todosUpdate([...newList])
-        localStorage.setItem("todos", JSON.stringify([...newList]))
+        dispatch(checkTodo({ id: newData.id, isDone: newData.isDone }))
     }
-
     const deleteHandler = (id) => {
-        let newList = todos.filter(i => {
-            return i.id !== id
-        })
-
-        todosUpdate([...newList])
-        localStorage.setItem("todos", JSON.stringify([...newList]))
+        dispatch(deleteTodo(id))
     }
-
     const editHandler = (id, value) => {
-        let index = todos.findIndex(element => element.id === id)
-        let newList = [...todos]
-        newList[index] = { ...newList[index], "title": value }
-        todosUpdate([...newList])
-        localStorage.setItem("todos", JSON.stringify([...newList]))
+        dispatch(editTodo({ id, value }))
     }
-
     const filterTodos = (data) => {
-
-        // if (data === "true") {
-        //     todosUpdate([...useList].filter(i => {
-        //         return i.isDone.toString() === data
-        //     }))
-        // } else if (data === "false") {
-        //     todosUpdate([...useList].filter(i => {
-        //         return i.isDone.toString() === data
-        //     }))
-        // } else if (data === "all") {
-        //     todosUpdate([...useList])
-        // }
+        filterUpdate(data)
     }
-
+    const todosNew = todos.filter((e) => {
+        if (filter === 'all') {
+            return e.isDone === true || e.isDone === false
+        } else if (filter === 'true') {
+            return e.isDone === true
+        } else if (filter === 'false') {
+            return e.isDone === false
+        }
+    })
     return (
         <div>
-            <Header />
-            <AddTodo add={add} />
+            <Header/>
+            <AddTodo addHandler={addHandler} />
             <FilterTodos filterTodos={filterTodos} />
-
-            {todos.sort((a, b) => {
-                return new Date(a.completeAt).getTime() - new Date(b.completeAt).getTime()
-            }).map(e => {
-                return <ToDo key={e.id}
-                    id={e.id}
-                    title={e.title}
-                    isDone={e.isDone}
-                    createdAt={e.createdAt}
-                    completeAt={e.completeAt}
-                    checkHandler={checkHandler}
-                    deleteHandler={deleteHandler}
-                    editHandler={editHandler} />
-            })
-            }
-
+            <ShowTodo todos={todosNew}
+                checkHandler={checkHandler}
+                deleteHandler={deleteHandler}
+                editHandler={editHandler} />
         </div>
     )
 }
